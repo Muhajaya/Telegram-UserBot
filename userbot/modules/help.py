@@ -19,9 +19,9 @@ async def helper(event):
             if args in HELPER:
                 await event.edit(str(HELPER[args]))
             else:
-                await event.edit("Please specify a valid module name.")
+                await event.edit("Tolong berikan nama module yang valid.")
         else:
-            await event.edit("Please specify which module do you want help for!")
+            await event.edit("Tolong lebih rinci modul mana yang anda butuh bantuan!")
             string = ""
             for i in HELPER:
                 string += str(i)
