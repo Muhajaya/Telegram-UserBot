@@ -124,7 +124,7 @@ async def set_time_country(loc):
 
         time_zone = await get_tz(temp_country)
         if not time_zone:
-            await loc.edit("``` Wrong country given! Try again! ```")
+            await loc.edit("``` Negara yg dituju salah! Coba lagi! ```")
             return
 
         try:
