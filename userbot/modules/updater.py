@@ -23,7 +23,7 @@ async def gen_chlog(repo, diff):
 
 
 async def is_off_br(br):
-    off_br = ['master', 'staging', 'redis'], 'indo'
+    off_br = ['master', 'staging', 'redis', 'indo']
     for k in off_br:
         if k == br:
             return 1
@@ -32,29 +32,29 @@ async def is_off_br(br):
 
 @register(outgoing=True, pattern="^.update(?: |$)(.*)")
 async def upstream(ups):
-    await ups.edit("`Checking for updates, please wait....`")
+    await ups.edit("`Mengecek Pembaruan, tunggu sebentar....`")
     conf = ups.pattern_match.group(1)
     off_repo = 'https://github.com/muhajaya/Telegram-UserBot.git'
 
     try:
-        txt = "`Oops.. Updater cannot continue due to some problems occured`\n\n**LOGTRACE:**\n"
+        txt = "`Oops.. Updater tidak bisa memeriksa pembaruan karena ada beberapa masalah`\n\n**LOGTRACE:**\n"
         repo = Repo()
     except NoSuchPathError as error:
-        await ups.edit(f'{txt}\n`directory {error} is not found`')
+        await ups.edit(f'{txt}\n`directori {error} tidak ditemukan`')
         return
     except InvalidGitRepositoryError as error:
-        await ups.edit(f'{txt}\n`directory {error} does not seems to be a git repository`')
+        await ups.edit(f'{txt}\n`directori {error} sepertinya bukan repositori git`')
         return
     except GitCommandError as error:
-        await ups.edit(f'{txt}\n`Early failure! {error}`')
+        await ups.edit(f'{txt}\n`Kegagalan awal! {error}`')
         return
 
     ac_br = repo.active_branch.name
     if not await is_off_br(ac_br):
         await ups.edit(
-            f'**[UPDATER]:**` Looks like you are using your own custom branch ({ac_br}). \
-            in that case, Updater is unable to identify which branch is to be merged. \
-            please checkout to any official branch`'
+            f'**[UPDATER]:**` Sepertinya anda menggunakan branch kustom ({ac_br}). \
+            jika iya, maka Updater tidak bisa melakukan penggabungan. \
+            silakan ganti ke branch yg official`'
             )
         return
 
@@ -68,12 +68,12 @@ async def upstream(ups):
     changelog = await gen_chlog(repo, f'HEAD..upstream/{ac_br}')
 
     if not changelog:
-        await ups.edit(f'\n`Your BOT is`  **up-to-date**  `with`  **{ac_br}**\n')
+        await ups.edit(f'\n`Bot anda sudah`  **mutakhir**  `dengan`  **{ac_br}**\n')
         return
 
     if conf != "now":
-        await ups.edit(f'**New UPDATE available for [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`')
-        await ups.respond('`do \".update now\" to update`')
+        await ups.edit(f'**UPDATE terbaru tersedia untuk [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`')
+        await ups.respond('`ketik \".update now\" untuk update`')
         return
 
     await ups.edit('`New update found, updating...`')
@@ -81,20 +81,20 @@ async def upstream(ups):
     try:
         ups_rem.pull(ac_br)
         await ups.edit(
-            '`Successfully Updated without casualties\nBot is switching off now.. restart kthx`'
+            '`Selesai memperbarui tanpa kesalahan\nBot dimatikan dulu sekarang.. restart kthx`'
             )
         await ups.client.disconnect()
     except GitCommandError:
         ups_rem.git.reset('--hard')
         await ups.edit(
-            '`Successfully Updated with casualties\nBot is switching off now.. restart kthx`'
+            '`Selesai memperbarui dengan kesalahan\nBot dimatikan dulu sekarang.. restart kthx`'
             )
         await ups.client.disconnect()
 
 
 HELPER.update({
     'update': '.update\
-\nUsage: Checks if the main userbot repository has any updates and shows changelog if so.\
+\nUsage: Memeriksa apakah bot memiliki update dari repositori dan menampilkan changelog.\
 \n\n.update now\
-\nUsage: Updates your userbot if there are any updates in the main userbot repository.'
+\nUsage: Update userbot jika di repositori tersedia update.'
 })
