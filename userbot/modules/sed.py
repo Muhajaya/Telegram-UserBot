@@ -74,7 +74,7 @@ async def sed(command):
             to_fix = textx.text
         else:
             await command.edit(
-                "`Master, I don't have brains. Well you too don't I guess.`"
+                "`Tuan, saya tidak punya otak. Anda juga tidak kaya nya aowkawo.`"
             )
             return
 
@@ -82,7 +82,7 @@ async def sed(command):
 
         if not repl:
             await command.edit(
-                "`Master, I don't have brains. Well you too don't I guess.`"
+                "`Tuan, saya tidak punya otak. Anda juga tidak kaya nya aowkawo.`"
             )
             return
 
@@ -90,7 +90,7 @@ async def sed(command):
             check = re.match(repl, to_fix, flags=re.IGNORECASE)
             if check and check.group(0).lower() == to_fix.lower():
                 await command.edit(
-                    "`Boi!, that's a reply. Don't use sed`"
+                    "`Boi!, itu reply. Jangan pakai sed lha`"
                 )
                 return
 
@@ -104,13 +104,13 @@ async def sed(command):
             else:
                 text = re.sub(repl, repl_with, to_fix, count=1).strip()
         except sre_err:
-            await command.edit("B O I! [Learn Regex](https://regexone.com)")
+            await command.edit("B O I! [Belajar dulu](https://regexone.com)")
             return
         if text:
-            await command.edit("Did you mean? \n\n`" + text + "`")
+            await command.edit("Hmmm maksud Anda? \n`" + text + "`")
 
 HELPER.update({
-    "sed": "sed<delimiter><old word(s)><delimiter><new word(s)>\
-    \nUsage: Replaces a word or words using sed.\
-    \nDelimiters: `/, :, |, _`"
+    "sed": "sed<delimiter><kata lama><delimiter><kata baru>\
+    \nPenggunaan: Mengganti kata atau kalimat dengan sed.\
+    \nDelimiter: `/, :, |, _`"
 })
