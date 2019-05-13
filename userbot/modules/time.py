@@ -69,7 +69,7 @@ async def time_func(tdata):
 
         time_zone = await get_tz(con)
         if not time_zone:
-            await tdata.edit("``` Wrong country given! Try again! ```")
+            await tdata.edit("``` Nama negara salah! Coba lagi! ```")
             return
 
         try:
@@ -98,13 +98,13 @@ async def date_func(dat):
 
             time_zone = await get_tz(COUNTRY)
             await dat.edit(
-                f"`It's`  **{dt.now(time_zone).strftime(d_form)}**  `here, in {COUNTRY}.`"
+                f"`Sekarang jam`  **{dt.now(time_zone).strftime(d_form)}**  `di {COUNTRY}.`"
             )
             return
 
         time_zone = await get_tz(con)
         if not time_zone:
-            await dat.edit("``` Wrong country given! Try again! ```")
+            await dat.edit("``` Nama negara salah! Coba lagi! ```")
             return
 
         try:
