@@ -25,8 +25,8 @@ bot.start()
 for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
 
-LOGS.info("Your Bot is alive! Test it by typing .alive on any chat."
-          " Should you need assistance, head to https://t.me/userbot_support")
+LOGS.info("Bot anda sudah hidup! Tes dengan mengirim .alive di obrolan manapun."
+          " Jika butuh bantuan silakan ke https://t.me/muhajaya")
 LOGS.info("Bot Versi : 2.4.2")
 
 if len(argv) not in (1, 3, 4):
